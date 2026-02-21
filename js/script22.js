@@ -1400,69 +1400,21 @@
   });
 
   // packages/shared/render/plugins/BaseSiteModules/webflow-brand.js
-  var require_webflow_brand = __commonJS({
-    "packages/shared/render/plugins/BaseSiteModules/webflow-brand.js"(exports, module) {
-      "use strict";
-      var Webflow2 = require_webflow_lib();
-      Webflow2.define("brand", module.exports = function($2) {
-        var api = {};
-        var doc = document;
-        var $html = $2("html");
-        var $body = $2("body");
-        var namespace = ".w-webflow-badge";
-        var location = window.location;
-        var isPhantom = /PhantomJS/i.test(navigator.userAgent);
-        var fullScreenEvents = "fullscreenchange webkitfullscreenchange mozfullscreenchange msfullscreenchange";
-        var brandElement;
-        api.ready = function() {
-          var shouldBrand = $html.attr("data-wf-status");
-          var publishedDomain = $html.attr("data-wf-domain") || "";
-          if (/\.webflow\.io$/i.test(publishedDomain) && location.hostname !== publishedDomain) {
-            shouldBrand = true;
-          }
-          if (shouldBrand && !isPhantom) {
-            brandElement = brandElement || createBadge();
-            ensureBrand();
-            setTimeout(ensureBrand, 500);
-            $2(doc).off(fullScreenEvents, onFullScreenChange).on(fullScreenEvents, onFullScreenChange);
-          }
-        };
-        function onFullScreenChange() {
-          var fullScreen = doc.fullScreen || doc.mozFullScreen || doc.webkitIsFullScreen || doc.msFullscreenElement || Boolean(doc.webkitFullscreenElement);
-          $2(brandElement).attr("style", fullScreen ? "display: none !important;" : "");
-        }
-        function createBadge() {
-          var $brand = $2('<a class=""></a>').attr("href", "");
-          var $logoArt = $2("<img>").attr("src", "").attr("alt", "").css({
-            marginRight: "4px",
-            width: "26px"
-          });
-          var $logoText = $2("<img>").attr("src", "").attr("alt", "");
-          $brand.append($logoArt, $logoText);
-          return $brand[0];
-        }
-        function ensureBrand() {
-          var found = $body.children(namespace);
-          var match = found.length && found.get(0) === brandElement;
-          var inEditor = Webflow2.env("editor");
-          if (match) {
-            if (inEditor) {
-              found.remove();
-            }
-            return;
-          }
-          if (found.length) {
-            found.remove();
-          }
-          if (!inEditor) {
-            $body.append(brandElement);
-          }
-        }
-        return api;
-      });
-    }
-  });
+ var require_webflow_brand = __commonJS({
+  "packages/shared/render/plugins/BaseSiteModules/webflow-brand.js"(exports, module) {
+    "use strict";
+    var Webflow2 = require_webflow_lib();
+    Webflow2.define("brand", module.exports = function($2) {
+      var api = {};
+      
+      api.ready = function() {
+        // We intentionally do nothing → no badge during testing
+      };
 
+      return api;
+    });
+  }
+});
   // packages/shared/render/plugins/BaseSiteModules/webflow-edit.js
   var require_webflow_edit = __commonJS({
     "packages/shared/render/plugins/BaseSiteModules/webflow-edit.js"(exports, module) {
